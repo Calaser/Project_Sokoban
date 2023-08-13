@@ -1,25 +1,35 @@
 import './style.css'
 
 document.querySelector('#app').innerHTML = `
-<div>
-  <div class="header">
-    <button id="decrementBtn">Previos Stage</button>
-    <p id="stageCounter">Stage 1</p>
-    <button id="incrementBtn">Next Stage</button>
+  <button id="decrementBtn">Previous Stage (Q)<br>&#10094;</button>
+  <button id="restartBtn">Reset Stage (R)<br>&#8634;</button>
+  <button id="incrementBtn">Next Stage (E)<br>&#10095;</button>
+  <div class="main">
+    <p id="screen">Loading...</p>
+    <p id="completeMsg">Congratulations! You just finish this stage.<br>Click stage select button to play other stage.</p>
   </div>
-  <div class="card">
-    <p id="screen">Loading...</button>
-    <p id="desc">Loading...</button>
+  <div class="Stage Message">
+    <h2 id="stageCounter">Loading Stage</h2>
+    <p id="desc">Loading...</p>
   </div>
-</div>
+  <div class="virtualKeyboard">
+    <button id="upBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 9.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/> </svg></button>
+    <button id="downBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/> </svg></button>
+    <button id="leftBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/> </svg></button>
+    <button id="rightBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/> </svg></button>
+  </div>
 `;
 
-let mapIndex = 0;
-let locationX;
-let locationY;
-let checkIfFinish = false;
 const map = [
   [
+    [1, 1, 1, 1, 1, 1, 1,],
+    [1, 1, 1, 0, 0, 0, 1,],
+    [1, 3, 9, 2, 0, 0, 1,],
+    [1, 1, 1, 0, 2, 3, 1,],
+    [1, 1, 1, 1, 2, 0, 1,],
+    [1, 1, 1, 0, 3, 0, 1,],
+    [1, 1, 1, 1, 1, 1, 1,],
+  ], [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 1, 1],
     [1, 3, 9, 2, 0, 0, 1, 1],
@@ -38,8 +48,8 @@ const map = [
     [1, 1, 1, 0, 0, 2, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 3, 3, 1],
-    [1, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1],
-    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 9, 1, 1, 1, 1, 0, 0, 3, 3, 1],
+    [1, 0, 2, 0, 0, 2, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1],
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 3, 3, 1],
     [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   ],
@@ -57,58 +67,56 @@ const map = [
   ]
 ];
 
+let mapIndex = 0;
 let currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
+let locationX;
+let locationY;
+let checkIfFinish;
 
-for (var i = 0; i < currentMap.length; i++) {
-  for (var j = 0; j < currentMap[i].length; j++) {
-    if (currentMap[i][j] === 9) {
-      locationX = j;
-      locationY = i;
-      currentMap[i][j] = 0;
-    }
-  }
-  checkIfFinish = false;
-}
+
+mapInitialize(0);
 
 document.querySelector('#decrementBtn').addEventListener("click", () => {
-  if (map[mapIndex - 1]) {
-    currentMap = JSON.parse(JSON.stringify(map[--mapIndex]));
-    for (var i = 0; i < currentMap.length; i++) {
-      for (var j = 0; j < currentMap[i].length; j++) {
-        if (currentMap[i][j] === 9) {
-          locationX = j;
-          locationY = i;
-          currentMap[i][j] = 0;
-        }
-      }
-    }
-    checkIfFinish = false;
-    document.querySelector('#stageCounter').innerHTML = `Stage ${mapIndex + 1}`;
-    document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
-  }
+  mapInitialize(-1);
+})
+
+document.querySelector('#restartBtn').addEventListener("click", () => {
+  mapInitialize(0);
 })
 
 document.querySelector('#incrementBtn').addEventListener("click", () => {
-  if (map[mapIndex + 1]) {
-    currentMap = JSON.parse(JSON.stringify(map[++mapIndex]));
-    for (var i = 0; i < currentMap.length; i++) {
-      for (var j = 0; j < currentMap[i].length; j++) {
-        if (currentMap[i][j] === 9) {
-          locationX = j;
-          locationY = i;
-          currentMap[i][j] = 0;
-        }
-      }
-    }
-    checkIfFinish = false;
-    document.querySelector('#stageCounter').innerHTML = `Stage ${mapIndex + 1}`;
-    document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
+  mapInitialize(1);
+})
+
+document.querySelector('#upBtn').addEventListener("click", () => {
+  if (!checkIfFinish) {
+    move(0, -1);
+    refreshGameInfo();
   }
 })
 
+document.querySelector('#downBtn').addEventListener("click", () => {
+  if (!checkIfFinish) {
+    move(0, 1);
+    refreshGameInfo();
+  }
+})
 
-document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
-document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
+document.querySelector('#leftBtn').addEventListener("click", () => {
+  if (!checkIfFinish) {
+    move(-1, 0);
+    refreshGameInfo();
+  }
+
+})
+
+document.querySelector('#rightBtn').addEventListener("click", () => {
+  if (!checkIfFinish) {
+    move(1, 0);
+    refreshGameInfo();
+  }
+})
+
 window.addEventListener("keydown", (e) => {
   switch (e.code) {
     case "KeyW":
@@ -135,56 +143,78 @@ window.addEventListener("keydown", (e) => {
       if (checkIfFinish) break;
       move(1, 0);
       break;
+    case "KeyQ":
+      mapInitialize(-1);
+      break;
+    case "KeyR":
+      mapInitialize(0);
+      break;
+    case "KeyE":
+      mapInitialize(1);
+      break;
   }
-  document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
-  document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
-  checkIfFinish = true;
-  for (var i = 0; i < currentMap.length; i++) {
-    for (var j = 0; j < currentMap[i].length; j++) {
-      if (currentMap[i][j] === 3) {
-        checkIfFinish = false;
+  refreshGameInfo();
+})
+
+
+function mapInitialize(indexDiff) {
+  if (map[mapIndex + indexDiff]) {
+    mapIndex += indexDiff;
+    currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
+    for (var i = 0; i < currentMap.length; i++) {
+      for (var j = 0; j < currentMap[i].length; j++) {
+        if (currentMap[i][j] === 9) {
+          locationX = j;
+          locationY = i;
+          currentMap[i][j] = 0;
+        }
       }
     }
+    checkIfFinish = false;
+    document.getElementById("completeMsg").style.display = "none";
+    document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
+    document.querySelector('#stageCounter').innerHTML = `Stage ${mapIndex + 1}`;
+    document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
   }
-})
+}
 
 function move(x, y) {
   if (currentMap[locationY + y][locationX + x] === 0 || currentMap[locationY + y][locationX + x] === 3) {
-    if (x){
-      locationX+= x;
-      locationY+= y;
+    if (x) {
+      locationX += x;
+      locationY += y;
     }
-    if (y){
-      locationX+= x;
-      locationY+= y;
+    if (y) {
+      locationX += x;
+      locationY += y;
     }
   }
   else if (currentMap[locationY + y][locationX + x] === 2) {
     if (currentMap[locationY + 2 * y][locationX + 2 * x] === 0) {
       currentMap[locationY + y][locationX + x] = 0;
       currentMap[locationY + 2 * y][locationX + 2 * x] = 2;
-        locationX+= x;
-        locationY+= y;
+      locationX += x;
+      locationY += y;
     }
     else if (currentMap[locationY + 2 * y][locationX + 2 * x] === 3) {
       currentMap[locationY + y][locationX + x] = 0;
       currentMap[locationY + 2 * y][locationX + 2 * x] = 4;
-      locationX+= x;
-      locationY+= y;
+      locationX += x;
+      locationY += y;
     }
   }
   else if (currentMap[locationY + y][locationX + x] === 4) {
     if (currentMap[locationY + 2 * y][locationX + 2 * x] === 0) {
       currentMap[locationY + y][locationX + x] = 3;
       currentMap[locationY + 2 * y][locationX + 2 * x] = 2;
-      locationX+= x;
-      locationY+= y;
+      locationX += x;
+      locationY += y;
     }
     else if (currentMap[locationY + 2 * y][locationX + 2 * x] === 3) {
       currentMap[locationY + y][locationX + x] = 3;
       currentMap[locationY + 2 * y][locationX + 2 * x] = 4;
-      locationX+= x;
-      locationY+= y;
+      locationX += x;
+      locationY += y;
     }
   }
 }
@@ -195,11 +225,11 @@ function printScreen(map, locationX, locationY) {
     for (let j = 0; j < map[i].length; j++) {
       if (i >= 0 && j >= 0 && map[i] !== undefined && map[i][j] !== undefined)
         if (i === locationY && j === locationX)
-          screen += "我";
+          screen += "<span id='me'>我</span>";
         else if (map[i][j] === 0)
           screen += "&emsp;";
         else if (map[i][j] === 1)
-          screen += "牆";
+          screen += "壁";
         else if (map[i][j] === 2)
           screen += "口";
         else if (map[i][j] === 3)
@@ -211,9 +241,7 @@ function printScreen(map, locationX, locationY) {
       else
         screen += "&emsp;";
 
-      if (j != map[i].length - 1)
-        screen += "&ensp;";
-      else
+      if (j === map[i].length - 1)
         screen += "<br>";
     }
   }
@@ -244,4 +272,20 @@ function printScreen(map, locationX, locationY) {
   //   }
   // }
   return screen;
+}
+
+function refreshGameInfo() {
+  document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
+  document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
+  checkIfFinish = true;
+  for (var i = 0; i < currentMap.length; i++) {
+    for (var j = 0; j < currentMap[i].length; j++) {
+      if (currentMap[i][j] === 3) {
+        checkIfFinish = false;
+      }
+    }
+  }
+  if (checkIfFinish) {
+    document.getElementById("completeMsg").style.display = "block";
+  }
 }
