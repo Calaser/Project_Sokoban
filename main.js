@@ -40,7 +40,10 @@ let checkIfFinish;
 buildMenu(map);
 
 document.querySelector('#menuBtn').addEventListener("click", () => {
-  document.querySelector('.stageMenuWrapper').style.display = "block";
+  if (document.querySelector('.stageMenuWrapper').style.display === "none")
+    document.querySelector('.stageMenuWrapper').style.display = "block";
+  else
+    document.querySelector('.stageMenuWrapper').style.display = "none";
 })
 
 document.querySelector('#closeBtn').addEventListener("click", () => {
@@ -125,18 +128,18 @@ window.addEventListener("keydown", (e) => {
     case "KeyE":
       mapInitialize(1);
       break;
-      case "KeyM":
-        if(document.querySelector('.stageMenuWrapper').style.display === "none")
-          document.querySelector('.stageMenuWrapper').style.display = "block";
-        else
-          document.querySelector('.stageMenuWrapper').style.display = "none";
-        break;
+    case "KeyM":
+      if (document.querySelector('.stageMenuWrapper').style.display === "none")
+        document.querySelector('.stageMenuWrapper').style.display = "block";
+      else
+        document.querySelector('.stageMenuWrapper').style.display = "none";
+      break;
   }
   refreshGameInfo();
 })
 
 function buildMenu(map) {
-  for(var i = 0; map[i]; i++) {
+  for (var i = 0; map[i]; i++) {
     var button = document.createElement('button');
     button.id = `stageBtn${i}`;
     button.textContent = `${i + 1}`;
