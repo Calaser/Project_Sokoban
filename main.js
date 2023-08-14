@@ -1,4 +1,6 @@
-import './style.css'
+import './style.css';
+import mapData from '/map.js';
+
 
 document.querySelector('#app').innerHTML = `
   <button id="decrementBtn">Previous Stage (Q)<br>&#10094;</button>
@@ -9,7 +11,8 @@ document.querySelector('#app').innerHTML = `
     <p id="completeMsg">Congratulations! You just finish this stage.<br>Click stage select button to play other stage.</p>
   </div>
   <div class="Stage Message">
-    <h2 id="stageCounter">Loading Stage</h2>
+    <p id="stageCounter">Loading Stage</p>
+    <button id="menuBtn">Select Stage Menu (M)</button>
     <p id="desc">Loading...</p>
   </div>
   <div class="virtualKeyboard">
@@ -18,54 +21,15 @@ document.querySelector('#app').innerHTML = `
     <button id="leftBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/> </svg></button>
     <button id="rightBtn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/> </svg></button>
   </div>
+  <div class="stageMenuWrapper">
+  <button id="closeBtn">✖</button>
+  <h1>Stage Select</h1>
+    <div class="stageMenu">
+    </div>
+  </div>
 `;
 
-const map = [
-  [
-    [1, 1, 1, 1, 1, 1, 1,],
-    [1, 1, 1, 0, 0, 0, 1,],
-    [1, 3, 9, 2, 0, 0, 1,],
-    [1, 1, 1, 0, 2, 3, 1,],
-    [1, 1, 1, 1, 2, 0, 1,],
-    [1, 1, 1, 0, 3, 0, 1,],
-    [1, 1, 1, 1, 1, 1, 1,],
-  ], [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 0, 0, 1, 1],
-    [1, 3, 9, 2, 0, 0, 1, 1],
-    [1, 1, 1, 0, 2, 3, 1, 1],
-    [1, 3, 1, 1, 2, 0, 1, 1],
-    [1, 0, 1, 0, 3, 0, 1, 1],
-    [1, 2, 0, 4, 2, 2, 3, 1],
-    [1, 0, 0, 0, 3, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1]
-  ],
-  [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 0, 2, 0, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 3, 3, 1],
-    [1, 0, 2, 0, 0, 2, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1],
-    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 3, 3, 1],
-    [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  ],
-  [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 3, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 3, 3, 0, 0, 1, 0, 2, 0, 0, 2, 0, 0, 1],
-    [1, 3, 3, 0, 0, 1, 2, 1, 1, 1, 1, 0, 0, 1],
-    [1, 3, 3, 0, 0, 0, 0, 9, 0, 1, 1, 0, 0, 1],
-    [1, 3, 3, 0, 0, 1, 0, 1, 0, 0, 2, 0, 1, 1],
-    [1, 1, 1, 1, 1, 1, 0, 1, 1, 2, 0, 2, 0, 1],
-    [1, 1, 1, 0, 2, 0, 0, 2, 0, 2, 0, 2, 0, 1],
-    [1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  ]
-];
+const map = mapData;
 
 let mapIndex = 0;
 let currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
@@ -73,6 +37,15 @@ let locationX;
 let locationY;
 let checkIfFinish;
 
+buildMenu(map);
+
+document.querySelector('#menuBtn').addEventListener("click", () => {
+  document.querySelector('.stageMenuWrapper').style.display = "block";
+})
+
+document.querySelector('#closeBtn').addEventListener("click", () => {
+  document.querySelector('.stageMenuWrapper').style.display = "none";
+})
 
 mapInitialize(0);
 
@@ -152,12 +125,37 @@ window.addEventListener("keydown", (e) => {
     case "KeyE":
       mapInitialize(1);
       break;
+      case "KeyM":
+        if(document.querySelector('.stageMenuWrapper').style.display === "none")
+          document.querySelector('.stageMenuWrapper').style.display = "block";
+        else
+          document.querySelector('.stageMenuWrapper').style.display = "none";
+        break;
   }
   refreshGameInfo();
 })
 
+function buildMenu(map) {
+  for(var i = 0; map[i]; i++) {
+    var button = document.createElement('button');
+    button.id = `stageBtn${i}`;
+    button.textContent = `${i + 1}`;
+    //use IIFE to catch current i
+    button.addEventListener("click", (function (index) {
+      return function () {
+        mapInitialize(1000 + index);
+        document.querySelector('.stageMenuWrapper').style.display = "none";
+      }
+    })(i));
+    document.querySelector('.stageMenu').appendChild(button);
+  }
+}
 
 function mapInitialize(indexDiff) {
+  if (indexDiff >= 1000) {
+    mapIndex = indexDiff - 1000;
+    indexDiff = 0;
+  }
   if (map[mapIndex + indexDiff]) {
     mapIndex += indexDiff;
     currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
@@ -171,7 +169,7 @@ function mapInitialize(indexDiff) {
       }
     }
     checkIfFinish = false;
-    document.getElementById("completeMsg").style.display = "none";
+    document.querySelector("#completeMsg").style.display = "none";
     document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
     document.querySelector('#stageCounter').innerHTML = `Stage ${mapIndex + 1}`;
     document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
