@@ -142,5 +142,6 @@ const map = [
 ];
 
 // credit: https://www.mathsisfun.com/games/sokoban.html
+//         https://sokoban.jp/
 
 export default map;

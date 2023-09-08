@@ -22,12 +22,13 @@ body {
   text-align: center;
   background-color: rgb(132, 214, 187);
   border-radius: 5px;
-  border: #59bb82 2px solid;
+  border: #59bb82 3px solid;
 }
 
-#app>button,
-#menuBtn,
-.stageMenu>button {
+#nav>button,
+#navBottom>button,
+#stageMenu>button,
+#resetAllStageMsg>button {
   display: inline;
   border-radius: 8px;
   border: 2px solid #406b6e;
@@ -41,11 +42,23 @@ body {
   outline: none;
 }
 
-#app>button:hover {
-  border-color: #646cff;
+#resetAllStageMsg>button {
+  padding-inline: 20px;
 }
 
-.main {
+#resetAllStageMsg>button {
+  padding-inline: 20px;
+}
+
+#resetAllStageMsg>button:not(:last-child) {
+  margin-right: 30px;
+}
+
+#nav>button:hover {
+  border-color: #2e3392;
+}
+
+#main {
   position: relative;
 }
 
@@ -73,7 +86,8 @@ body {
   border: #59bb82 2px solid;
 }
 
-#completeMsg {
+#completeMsg,
+#resetAllStageMsg {
   display: none;
   font-size: min(2.5vw, 20px);
   position: absolute;
@@ -81,7 +95,7 @@ body {
   min-width: 200px;
   inset-inline: 30px;
   border-radius: 5px;
-  border: #5f8d91 1px solid;
+  border: #213547 3px solid;
   background-color: #a7dabc;
   padding: 20px;
 }
@@ -95,8 +109,8 @@ body {
 }
 
 @media screen and (min-width: 768px) {
-  #app>button,
-  #menuBtn {
+  #nav>button,
+  #navBottom>button {
     padding: 0.6em;
     font-size: 1.2em;
   }
@@ -106,16 +120,15 @@ body {
 /* virtualKeyboard */
 
 
-.virtualKeyboard {
+#virtualKeyboard {
   display: none;
   position: absolute;
   right: 80px;
   bottom: 200px;
 }
 
-.virtualKeyboard button {
+#virtualKeyboard button {
   cursor: pointer;
-  position: relative;
   background-color: #2dd3e2;
   width: 30px;
   height: 30px;
@@ -146,7 +159,7 @@ body {
 }
 
 @media (pointer: coarse) {
-  .virtualKeyboard{
+  #virtualKeyboard{
     display: block;
   }
 }
@@ -155,7 +168,7 @@ body {
 /* stageMenu */
 
 
-.stageMenuWrapper {
+#stageMenuWrapper {
   display: none;
   position: absolute;
   top: -10px;
@@ -165,7 +178,7 @@ body {
   background-color: inherit;
 }
 
-.stageMenu {
+#stageMenu {
   width: 350px;
   margin-inline: auto;
   display: flex;
@@ -173,7 +186,7 @@ body {
   column-gap: 25px;
 }
 
-.stageMenu>button {
+#stageMenu>button {
   flex-basis: 50px;
   font-size: 1.3em;
   height: 50px;
@@ -193,17 +206,17 @@ body {
 }
 
 @media screen and (min-width: 768px) {
-  .stageMenuWrapper {
+  #stageMenuWrapper {
     inset-inline: 50px;
     padding: 20px;
   }
   
-  .stageMenu {
+  #stageMenu {
     width: 400px;
     column-gap: 25px;
   }
 
-  .stageMenu>button {
+  #stageMenu>button {
     flex-basis: 60px;
     font-size: 1.5em;
     height: 60px;
@@ -211,14 +224,14 @@ body {
 }
 
 @media screen and (min-width: 992px) {
-  .stageMenu {
+  #stageMenu {
     width: 690px;
     column-gap: 10px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .stageMenu {
+  #stageMenu {
     width: 825px;
     column-gap: 25px;
   }
