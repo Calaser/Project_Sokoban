@@ -181,7 +181,8 @@ body {
   }
 
   #screen {
-    padding-bottom: 150px;
+    padding-top: 70px;
+    padding-bottom: 100px;
   }
 }
 
