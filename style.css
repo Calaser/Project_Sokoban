@@ -90,7 +90,7 @@ body {
 #resetAllStageMsg {
   display: none;
   line-height: 1.4;
-  font-size: clamp(20px, 3.2vw, 36px);
+  font-size: clamp(20px, 3vw, 28px);
   position: absolute;
   top: 100px;
   min-width: 200px;
