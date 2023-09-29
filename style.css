@@ -89,7 +89,7 @@ body {
 #completeMsg,
 #resetAllStageMsg {
   display: none;
-  font-size: min(2.5vw, 20px);
+  font-size: min(2.5vw, 32px);
   position: absolute;
   top: 100px;
   min-width: 200px;
@@ -97,7 +97,7 @@ body {
   border-radius: 5px;
   border: #213547 3px solid;
   background-color: #a7dabc;
-  padding: 20px;
+  padding: 10px;
 }
 
 
@@ -106,14 +106,21 @@ body {
     width: 80%;
     padding-inline: 2rem;
   }
+
   #nav>button,
   #navBottom>button,
   #stageMenu>button,
   #resetAllStageMsg>button {
     margin: 5px;
   }
+
   #stageCounter {
     display: inline-block;
+  }
+
+  #completeMsg,
+  #resetAllStageMsg {
+    padding: 20px;
   }
 }
 
@@ -133,13 +140,13 @@ body {
 #virtualKeyboard {
   display: none;
   position: absolute;
-  right: 80px;
-  bottom: 200px;
+  right: 100px;
+  bottom: 300px;
 }
 
 #virtualKeyboard button {
   cursor: pointer;
-  background-color: #2dd3e2;
+  background-color: #54c435;
   width: 50px;
   height: 50px;
   padding: 0;
@@ -150,22 +157,22 @@ body {
 
 #upBtn {
   position: absolute;
-  top: -40px;
+  top: -50px;
 }
 
 #downBtn {
   position: absolute;
-  top: 40px;
+  top: 50px;
 }
 
 #leftBtn {
   position: absolute;
-  left: -40px;
+  left: -50px;
 }
 
 #rightBtn {
   position: absolute;
-  left: 40px;
+  left: 50px;
 }
 
 @media (pointer: coarse) {
