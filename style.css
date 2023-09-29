@@ -141,7 +141,7 @@ body {
   display: none;
   position: absolute;
   right: 100px;
-  bottom: 300px;
+  bottom: 250px;
 }
 
 #virtualKeyboard button {
@@ -178,6 +178,10 @@ body {
 @media (pointer: coarse) {
   #virtualKeyboard {
     display: block;
+  }
+
+  #screen {
+    padding-bottom: 150px;
   }
 }
 
