@@ -89,7 +89,7 @@ body {
 #completeMsg,
 #resetAllStageMsg {
   display: none;
-  font-size: min(2.5vw, 32px);
+  font-size: min(3vw, 40px);
   position: absolute;
   top: 100px;
   min-width: 200px;
