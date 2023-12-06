@@ -1,7 +1,7 @@
 # Project_Sokoban
 一個畫面由文字組成的倉庫番小遊戲。
 
-[**>> 點此前往網站 <<**](https://calaser.github.io/Project_Sokoban)
+[**>> 點此前往網站 <<**](https://main--word-sokoban.netlify.app/)
 
 <img src="https://i.imgur.com/3G6ANM5.png">
 
