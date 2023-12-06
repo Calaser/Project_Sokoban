@@ -9,29 +9,32 @@
 收錄了由純文字構成畫面的倉庫番小遊戲，<br />
 目前共有10個關卡可供挑戰。
 
-## 網站功能(未修)
-可透過標頭的導航列在不同主題的排行榜之間切換。
+## 網站功能
+有三套按鍵可以操控上下左右
++ WASD
++ 十字鍵
++ 數字鍵盤 2/4/6/8
 
-每個排行榜主要由一個技能的主觀強度列表以及一個介紹技能的區塊組成，<br />
-透過點擊排行榜上的任意技能圖案可以開啟相關技能的說明及評價文本。
+可以重新開始關卡，<br />
+並且可以選擇上一關、下一關、從選單中選擇任意關卡等，<br />
+以上功能除了使用滑鼠操作以外也有對應的快捷鍵可以按。
 
+另外會紀錄已經通關的關卡。
 
 ## 相關元素(未修)
 + HTML
-  - Nav
-  - Table
-  - Semantic HTML
 + CSS
-  - Custom Properties (color picking)
   - RWD
     * Media Quary
-    * Modal (change layout for small screen)
-  - Pseudo Element (tooltips)
+    * Responsive Unit (font)
+    * Virtual Keyboard for mobile user
 + Javascript
-  - Async request (fetch and callback function chaining)
-  - JSON data process and object iterate
+  - ES6 module (CSS / map data)
+  - local storage (map record)
+  - looping for data process and print screen
   - DOM manipulate according to data
   - Render function (centralized process)
++ Vite
 
 ## 資料來源
 遊戲地圖主要來自以下兩處：<br />
