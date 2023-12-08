@@ -40,12 +40,13 @@ document.querySelector('#app').innerHTML = `
 const map = mapData;
 
 let mapIndex = 0;
-let currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
+let currentMap = JSON.parse(JSON.stringify(map[mapIndex])); //simple deep copy for known data
 let locationX;
 let locationY;
 let checkIfFinish;
 let mapClearStatus = [];
 
+//check local storage for past map clean status
 if (localStorage.getItem('mapClearStatus'))
   mapClearStatus = JSON.parse(localStorage.getItem('mapClearStatus'));
 else
@@ -53,8 +54,10 @@ else
     mapClearStatus.push(0);
   }
 
+//create menu button according to map data
 buildMenu(map);
 
+// window function for buttons
 document.querySelector('#menuBtn').addEventListener("click", () => {
   if (document.querySelector('#stageMenuWrapper').style.display !== "block")
     document.querySelector('#stageMenuWrapper').style.display = "block";
@@ -75,6 +78,7 @@ document.querySelector('#resetAllStageBtn').addEventListener("click", () => {
 
 document.querySelector('#resetYes').addEventListener("click", () => {
   document.querySelector('#resetAllStageMsg').style.display = "none";
+  //clean data and local storage
   mapClearStatus = [];
   for (let i = 0; map[i]; i++) {
     mapClearStatus[i] = 0;
@@ -102,6 +106,7 @@ document.querySelector('#incrementBtn').addEventListener("click", () => {
   mapInitialize(1);
 })
 
+//virtual keyboard function
 document.querySelector('#upBtn').addEventListener("click", () => {
   if (!checkIfFinish) {
     move(0, -1);
@@ -130,6 +135,7 @@ document.querySelector('#rightBtn').addEventListener("click", () => {
   }
 })
 
+// keyboard function
 window.addEventListener("keydown", (e) => {
   switch (e.code) {
     case "KeyW":
@@ -175,6 +181,7 @@ window.addEventListener("keydown", (e) => {
   refreshGameInfo();
 })
 
+//create menu button according to map data
 function buildMenu(map) {
   for (var i = 0; map[i]; i++) {
     var button = document.createElement('button');
@@ -192,6 +199,9 @@ function buildMenu(map) {
   }
 }
 
+//initialize map according to argument
+//normally argument will be different between new map and current map  ex: -1=previous map  0=no map change  1=next map
+//this function can also go to specified map if argument >= 1000, format = 1000 + stage
 function mapInitialize(indexDiff) {
   if (indexDiff >= 1000) {
     mapIndex = indexDiff - 1000;
@@ -199,10 +209,10 @@ function mapInitialize(indexDiff) {
   }
   if (map[mapIndex + indexDiff]) {
     mapIndex += indexDiff;
-    currentMap = JSON.parse(JSON.stringify(map[mapIndex]));
+    currentMap = JSON.parse(JSON.stringify(map[mapIndex])); // copy map from data
     for (let i = 0; i < currentMap.length; i++) {
       for (let j = 0; j < currentMap[i].length; j++) {
-        if (currentMap[i][j] === 9) {
+        if (currentMap[i][j] === 9) { //check and record starting location
           locationX = j;
           locationY = i;
           currentMap[i][j] = 0;
@@ -223,8 +233,10 @@ function mapInitialize(indexDiff) {
 }
 
 // 0:空 1:牆 2:箱 3:終點 4:箱子on終點
+//argument x=正往右負往左 y=正往下負往上
 function move(x, y) {
-  if (currentMap[locationY + y][locationX + x] === 0 || currentMap[locationY + y][locationX + x] === 3) {
+  //空地的場合
+  if (currentMap[locationY + y][locationX + x] === 0 || currentMap[locationY + y][locationX + x] === 3) { 
     if (x) {
       locationX += x;
       locationY += y;
@@ -234,6 +246,7 @@ function move(x, y) {
       locationY += y;
     }
   }
+  //推箱子的場合 判定箱子後面空/終點才會推
   else if (currentMap[locationY + y][locationX + x] === 2) {
     if (currentMap[locationY + 2 * y][locationX + 2 * x] === 0) {
       currentMap[locationY + y][locationX + x] = 0;
@@ -248,6 +261,7 @@ function move(x, y) {
       locationY += y;
     }
   }
+  //推箱子on終點 判定同箱子 後面空/終點才會推
   else if (currentMap[locationY + y][locationX + x] === 4) {
     if (currentMap[locationY + 2 * y][locationX + 2 * x] === 0) {
       currentMap[locationY + y][locationX + x] = 3;
@@ -264,6 +278,7 @@ function move(x, y) {
   }
 }
 
+//render function
 function printScreen(map, locationX, locationY) {
   var screen = "";
   for (let i = 0; i < map.length; i++) {
@@ -319,6 +334,8 @@ function printScreen(map, locationX, locationY) {
   return screen;
 }
 
+// in-game information refresh
+// call after player move
 function refreshGameInfo() {
   document.querySelector('#desc').innerHTML = `當前位置為(${locationX},${locationY})`;
   document.querySelector('#screen').innerHTML = printScreen(currentMap, locationX, locationY);
