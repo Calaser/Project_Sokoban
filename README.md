@@ -31,7 +31,7 @@
 + Javascript
   - ES6 module (CSS / map data)
   - local storage (map record)
-  - looping for data process and print screen
+  - looping for data process and printing screen
   - DOM manipulate according to data
   - Render function (centralized process)
 + Vite
